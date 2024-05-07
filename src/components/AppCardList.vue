@@ -1,13 +1,12 @@
 <script setup>
-import { inject } from 'vue'
-
 import AppCard from './AppCard.vue'
 
 defineProps({
   rolls: Array
 })
 
-const addToFavorite = inject('addToFavorite')
+const emit = defineEmits(['addToFavorite', 'addToDrawer'])
+
 
 </script>
 <template>
@@ -23,7 +22,8 @@ const addToFavorite = inject('addToFavorite')
       :price="item.price"
       :is-added="item.isAdded"
       :isFavorite="item.isFavorite"
-      :onClickFavorite="() => addToFavorite(item)"
+      :onClickFavorite="() => emit('addToFavorite', item)"
+      :onClickAdd="() => addToDrawer(item)"
     />
   </div>
 </template>

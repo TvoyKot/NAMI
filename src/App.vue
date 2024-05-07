@@ -8,6 +8,7 @@ import AppHeader from './components/AppHeader.vue'
 import AppTabs from './components/AppTabs.vue'
 import AppCardList from './components/AppCardList.vue'
 
+
 const rolls = ref([])
 
 const filters = reactive({
@@ -24,16 +25,33 @@ const onChangeInput = (event) => {
 }
 
 const addToFavorite = async (item) => {
-  item.isFavorite = !item.isFavorite
-  console.log(item)
+  try {
+    if (!item.isFavorite) {
+      const obj = {
+        parentId: item.id
+      }
+      item.isFavorite = true
+
+      const { data } = await axios.post(`https://e32a30db69781a0a.mokky.dev/favorites`, obj)
+
+      item.favoriteId = data.id
+    } else {
+      item.isFavorite = false
+      await axios.delete(`https://e32a30db69781a0a.mokky.dev/favorites/${item.favoriteId}`)
+    }
+    console.log(item)
+  } catch (err) {
+    console.log(err)
+  }
 }
+
 const fetchFavorites = async () => {
   try {
     const { data: favorites } = await axios.get(`https://e32a30db69781a0a.mokky.dev/favorites`)
     rolls.value = rolls.value.map((item) => {
       const favorite = favorites.find((favorite) => favorite.parentId === item.id)
       if (!favorite) {
-        return item;
+        return item
       }
       return {
         ...item,
@@ -61,7 +79,6 @@ const fetchItems = async () => {
     })
 
     rolls.value = data
-
   } catch (err) {
     console.log(err)
   }
@@ -77,7 +94,7 @@ watch(filters, fetchItems)
 </script>
 
 <template>
-  <!-- <AppDrawer /> -->
+  <AppDrawer />
   <div class="shadow-xl bg-blue-950">
     <div class="w-4/5 mx-auto z-5">
       <AppHeader />
@@ -107,7 +124,7 @@ watch(filters, fetchItems)
           />
         </div>
       </div>
-      <AppCardList :rolls="rolls" />
+      <AppCardList :rolls="rolls" @addToFavorite="addToFavorite" />
     </section>
   </main>
 </template>
