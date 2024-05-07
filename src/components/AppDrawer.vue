@@ -1,4 +1,7 @@
-<script setup></script>
+<script setup>
+import AppDrawerButtons from './AppDrawerButtons.vue'
+</script>
+
 <template>
   <div class="fixed top-0 left-0 w-full h-full z-10 bg-black/50 backdrop-blur-md"></div>
   <div
@@ -53,18 +56,7 @@
       <p class="mb-10 w-96">
         * Сумма заказа для доставки курьером должна составлять не менее 500 ₽
       </p>
-      <div>
-        <button
-          class="shadow-xl py-5 px-7 text-black bg-white cursor-pointer hover:bg-black hover:text-white transition rounded-lg text-xl border-2"
-        >
-          Вернуться к покупкам
-        </button>
-        <button
-          class="shadow-xl py-5 px-7 text-black bg-white cursor-pointer hover:bg-black hover:text-white transition rounded-lg text-xl border-2"
-        >
-          Оформить заказ
-        </button>
-      </div>
+      <AppDrawerButtons />
     </div>
   </div>
 </template>

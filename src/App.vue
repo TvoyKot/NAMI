@@ -3,11 +3,19 @@ import { onMounted, ref, reactive, provide, watch } from 'vue'
 
 import axios from 'axios'
 
-// import AppDrawer from './components/AppDrawer.vue'
+import AppDrawer from './components/AppDrawer.vue'
 import AppHeader from './components/AppHeader.vue'
 import AppTabs from './components/AppTabs.vue'
 import AppCardList from './components/AppCardList.vue'
 
+const drawerOpen = ref(false)
+
+const openDrawer = () => {
+  drawerOpen.value = true
+}
+const closeDrawer = () => {
+  drawerOpen.value = false
+}
 
 const rolls = ref([])
 
@@ -84,7 +92,10 @@ const fetchItems = async () => {
   }
 }
 
-provide('addToFavorite', addToFavorite)
+provide('drawerActions', {
+  openDrawer,
+  closeDrawer
+})
 
 onMounted(async () => {
   await fetchItems(), await fetchFavorites()
@@ -94,10 +105,10 @@ watch(filters, fetchItems)
 </script>
 
 <template>
-  <AppDrawer />
+  <AppDrawer v-if="drawerOpen"/>
   <div class="shadow-xl bg-blue-950">
     <div class="w-4/5 mx-auto z-5">
-      <AppHeader />
+      <AppHeader @open-drawer="openDrawer"/>
     </div>
   </div>
   <main>
@@ -124,7 +135,7 @@ watch(filters, fetchItems)
           />
         </div>
       </div>
-      <AppCardList :rolls="rolls" @addToFavorite="addToFavorite" />
+      <AppCardList :rolls="rolls" @add-to-favorite="addToFavorite" />
     </section>
   </main>
 </template>
