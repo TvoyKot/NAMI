@@ -30,14 +30,15 @@ const emit = defineEmits(['openDrawer'])
         <img src="/public/phone-icon.svg" alt="phone" />
         <a href="#">+7 979 700 97 91</a>
       </div>
-      <a class="py-2 px-2 bg-white rounded-full mr-6 cursor-pointer relative">
+      <a
+        class="py-2 px-2 bg-white rounded-full mr-6 cursor-pointer relative"
+        @click="() => emit('openDrawer')"
+      >
         <span
           class="absolute bottom-5 text-sm right-5 rounded-full py-1 px-3 text-blue-950 bg-slate-200"
           >1</span
         >
-        <img 
-        @click="() => emit('openDrawer')" 
-        class="w-6" src="/public/cart-icon.svg" alt="cart" />
+        <img class="w-6" src="/public/cart-icon.svg" alt="cart" />
       </a>
       <a href="#" class="py-2 px-6 bg-white text-blue-950 rounded-3xl"> Войти </a>
     </div>

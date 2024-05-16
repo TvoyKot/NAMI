@@ -9,7 +9,8 @@ defineProps({
   price: Number,
   isAdded: Boolean,
   isFavorite: Boolean,
-  onClickFavorite: Function
+  onClickFavorite: Function,
+  onClickAdd: Function
 })
 
 </script>
@@ -37,6 +38,7 @@ defineProps({
     <div class="flex justify-between items-center">
       <span class="text-xl">{{ price }} ₽</span>
       <button
+      @click="onClickAdd"
         class="py-2 px-8 text-white text-base rounded-lg bg-blue-950 hover:bg-blue-800 active:bg-blue-900 cursor-pointer"
       >
         В корзину

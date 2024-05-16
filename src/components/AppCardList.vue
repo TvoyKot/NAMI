@@ -5,9 +5,7 @@ defineProps({
   rolls: Array
 })
 
-const emit = defineEmits(['addToFavorite', 'addToDrawer'])
-
-
+const emit = defineEmits(['addToFavorite', 'onClickAddDrawer'])
 </script>
 <template>
   <div class="grid grid-cols-4 gap-x-4 gap-y-4">
@@ -21,9 +19,9 @@ const emit = defineEmits(['addToFavorite', 'addToDrawer'])
       :description="item.description"
       :price="item.price"
       :is-added="item.isAdded"
-      :isFavorite="item.isFavorite"
-      :onClickFavorite="() => emit('addToFavorite', item)"
-      :onClickAdd="() => addToDrawer(item)"
+      :is-favorite="item.isFavorite"
+      :on-click-favorite="() => emit('addToFavorite', item)"
+      :on-click-add="() => emit('onClickAddDrawer', item)"
     />
   </div>
 </template>

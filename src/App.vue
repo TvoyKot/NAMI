@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, reactive, provide, watch } from 'vue'
+import { onMounted, ref, reactive, provide, computed, watch } from 'vue'
 
 import axios from 'axios'
 
@@ -8,16 +8,38 @@ import AppHeader from './components/AppHeader.vue'
 import AppTabs from './components/AppTabs.vue'
 import AppCardList from './components/AppCardList.vue'
 
+const drawerItems = ref([])
+
+const addToDrawer = (item) => {
+  item.isAdded = true
+  drawerItems.value.push(item)
+}
+
+const removeFromDrawer = (item) => {
+  drawerItems.value.splice(drawerItems.value.indexOf(item), 1)
+  item.isAdded = false
+}
+
+const onClickAddDrawer = (item) => {
+  if (!item.isAdded) {
+    addToDrawer(item)
+  } else {
+    removeFromDrawer(item)
+  }
+}
+
+const rolls = ref([])
+
 const drawerOpen = ref(false)
 
 const openDrawer = () => {
   drawerOpen.value = true
+  document.body.style.overflow = 'hidden'
 }
 const closeDrawer = () => {
   drawerOpen.value = false
+  document.body.style.overflow = 'auto'
 }
-
-const rolls = ref([])
 
 const filters = reactive({
   sortBy: 'name',
@@ -92,7 +114,12 @@ const fetchItems = async () => {
   }
 }
 
+const totalPrice = computed(() => drawerItems.value.reduce((acc, item) => acc + item.price, 0))
+
 provide('drawerActions', {
+  drawerItems,
+  addToDrawer,
+  removeFromDrawer,
   openDrawer,
   closeDrawer
 })
@@ -105,10 +132,10 @@ watch(filters, fetchItems)
 </script>
 
 <template>
-  <AppDrawer v-if="drawerOpen"/>
+  <AppDrawer v-if="drawerOpen" :total-price="totalPrice" />
   <div class="shadow-xl bg-blue-950">
     <div class="w-4/5 mx-auto z-5">
-      <AppHeader @open-drawer="openDrawer"/>
+      <AppHeader @open-drawer="openDrawer" />
     </div>
   </div>
   <main>
@@ -135,7 +162,11 @@ watch(filters, fetchItems)
           />
         </div>
       </div>
-      <AppCardList :rolls="rolls" @add-to-favorite="addToFavorite" />
+      <AppCardList
+        :rolls="rolls"
+        @add-to-favorite="addToFavorite"
+        @on-click-add-drawer="onClickAddDrawer"
+      />
     </section>
   </main>
 </template>
