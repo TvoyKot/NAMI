@@ -1,5 +1,9 @@
 <script setup>
 const emit = defineEmits(['openDrawer'])
+
+defineProps({
+  totalItems: Number
+})
 </script>
 <template>
   <header class="text-white mb-24">
@@ -35,8 +39,9 @@ const emit = defineEmits(['openDrawer'])
         @click="() => emit('openDrawer')"
       >
         <span
+        v-if="totalItems > 0"
           class="absolute bottom-5 text-sm right-5 rounded-full py-1 px-3 text-blue-950 bg-slate-200"
-          >1</span
+          >{{ totalItems }}</span
         >
         <img class="w-6" src="/public/cart-icon.svg" alt="cart" />
       </a>

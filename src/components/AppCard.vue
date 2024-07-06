@@ -1,4 +1,5 @@
 <script setup>
+import AppCardCounter from './AppCardCounter.vue'
 
 defineProps({
   id: Number,
@@ -10,9 +11,8 @@ defineProps({
   isAdded: Boolean,
   isFavorite: Boolean,
   onClickFavorite: Function,
-  onClickAdd: Function
+  onClickAdd: Function,
 })
-
 </script>
 
 <template>
@@ -37,12 +37,18 @@ defineProps({
     </p>
     <div class="flex justify-between items-center">
       <span class="text-xl">{{ price }} ₽</span>
-      <button
-      @click="onClickAdd"
-        class="py-2 px-8 text-white text-base rounded-lg bg-blue-950 hover:bg-blue-800 active:bg-blue-900 cursor-pointer"
-      >
-        В корзину
-      </button>
+      <div>
+        <button
+          v-if="!isAdded"
+          @click="onClickAdd()"
+          class="py-2 px-8 text-white text-base rounded-lg bg-blue-950 hover:bg-blue-800 active:bg-blue-900 cursor-pointer"
+        >
+          В корзину
+        </button>
+        <div v-else>
+         <AppCardCounter />
+        </div>
+      </div>
     </div>
   </div>
 </template>

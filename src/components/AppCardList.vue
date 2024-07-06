@@ -2,7 +2,7 @@
 import AppCard from './AppCard.vue'
 
 defineProps({
-  rolls: Array
+  rolls: Array,
 })
 
 const emit = defineEmits(['addToFavorite', 'onClickAddDrawer'])

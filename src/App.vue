@@ -10,6 +10,10 @@ import AppCardList from './components/AppCardList.vue'
 
 const drawerItems = ref([])
 
+const isCreatingOrder = ref(false)
+
+const isDrawerEmpty = computed(() => drawerItems.value.length === 0)
+
 const addToDrawer = (item) => {
   item.isAdded = true
   drawerItems.value.push(item)
@@ -114,14 +118,33 @@ const fetchItems = async () => {
   }
 }
 
+const createOrder = async () => {
+  try {
+    isCreatingOrder.value = true
+    const { data } = await axios.post(`https://e32a30db69781a0a.mokky.dev/orders`, {
+      orderItems: drawerItems.value,
+      totalPrice: totalPrice.value
+    })
+    drawerItems.value = []
+    return data
+  } catch (err) {
+    console.log(err)
+  } finally {
+    isCreatingOrder.value = false
+  }
+}
+
 const totalPrice = computed(() => drawerItems.value.reduce((acc, item) => acc + item.price, 0))
 
 provide('drawerActions', {
   drawerItems,
+  isCreatingOrder,
+  isDrawerEmpty,
   addToDrawer,
   removeFromDrawer,
   openDrawer,
-  closeDrawer
+  closeDrawer,
+  createOrder
 })
 
 onMounted(async () => {
@@ -129,15 +152,21 @@ onMounted(async () => {
 })
 
 watch(filters, fetchItems)
+watch(drawerItems, () => {
+  rolls.value = rolls.value.map((item) => ({
+    ...item,
+    isAdded: false
+  }))
+})
 </script>
 
 <template>
   <AppDrawer v-if="drawerOpen" :total-price="totalPrice" />
-  <div class="shadow-xl bg-blue-950">
+  <header class="shadow-xl bg-blue-950">
     <div class="w-4/5 mx-auto z-5">
-      <AppHeader @open-drawer="openDrawer" />
+      <AppHeader @open-drawer="openDrawer" :total-items="drawerItems.length" />
     </div>
-  </div>
+  </header>
   <main>
     <section class="w-3/5 mx-auto mb-14">
       <h1
@@ -169,6 +198,9 @@ watch(filters, fetchItems)
       />
     </section>
   </main>
+  <div class="">
+    <footer class="bg-blue-950"></footer>
+  </div>
 </template>
 
 <style></style>
