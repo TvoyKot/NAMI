@@ -1,10 +1,10 @@
 <script setup>
-import { inject, computed } from 'vue'
+// import { inject, computed } from 'vue'
 
 
-const { closeDrawer, createOrder, isCreatingOrder, isDrawerEmpty } = inject('drawerActions')
+// const { closeDrawer, createOrder, isCreatingOrder, isDrawerEmpty } = inject('drawerActions')
 
-const disabledButton = computed(() => isCreatingOrder.value || isDrawerEmpty.value ? true : false)
+// const disabledButton = computed(() => isCreatingOrder.value || isDrawerEmpty.value ? true : false)
 
 </script>
 <template>

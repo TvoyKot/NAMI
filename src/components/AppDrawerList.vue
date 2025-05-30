@@ -4,6 +4,7 @@ import { inject } from 'vue'
 import AppDrawerItem from './AppDrawerItem.vue'
 
 const { drawerItems, removeFromDrawer } = inject('drawerActions')
+
 </script>
 <template>
   <AppDrawerItem

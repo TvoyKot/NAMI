@@ -1,7 +1,9 @@
 <script setup>
-import AppCardCounter from './AppCardCounter.vue'
+import { ref } from 'vue'
 
-defineProps({
+const counter = ref(1)
+
+const props = defineProps({
   id: Number,
   imageUrl: String,
   name: String,
@@ -11,8 +13,26 @@ defineProps({
   isAdded: Boolean,
   isFavorite: Boolean,
   onClickFavorite: Function,
-  onClickAdd: Function,
+  onClickAdd: Function
 })
+
+
+
+const increaseCount = () => {
+  if (counter.value === 99) {
+    return
+  } else {
+    counter.value += 1
+  }
+}
+
+const decreaseCount = () => {
+  if (counter.value > 1) {
+    counter.value -= 1
+  } else {
+    props.onClickAdd()
+  }
+}
 </script>
 
 <template>
@@ -46,7 +66,17 @@ defineProps({
           В корзину
         </button>
         <div v-else>
-         <AppCardCounter />
+          <span
+            @click="decreaseCount()"
+            class="text-white text-xl py-2 mr-3 rounded-full px-2 bg-blue-950 cursor-pointer"
+            >-</span
+          >
+          <span>{{ counter }}</span>
+          <span
+            @click="increaseCount()"
+            class="text-white text-xl py-2 ml-3 rounded-full px-2 bg-blue-950 cursor-pointer"
+            >+</span
+          >
         </div>
       </div>
     </div>

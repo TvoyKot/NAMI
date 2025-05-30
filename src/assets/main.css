@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 body {
-    height: 100%;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position-y: 78px;
-    background-image: url('../public/main-bg.png');
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-y: 78px;
+  background-image: url('../public/main-bg.png');
 }

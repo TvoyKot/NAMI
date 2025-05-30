@@ -1,27 +1,31 @@
 <script setup>
+import { computed } from 'vue'
+import { useRootStore } from '../store/rootStore'
 import AppCard from './AppCard.vue'
-
-defineProps({
-  rolls: Array,
+const rootStore = useRootStore()
+const props = defineProps({
+  selectedCategory: {
+    type: String,
+    required: true
+  }
 })
 
-const emit = defineEmits(['addToFavorite', 'onClickAddDrawer'])
+const filteredProducts = computed(() => {
+  return rootStore.allProducts.filter((product) => product.category === props.selectedCategory)
+})
 </script>
 <template>
   <div class="grid grid-cols-4 gap-x-4 gap-y-4">
     <AppCard
-      v-for="item in rolls"
-      :key="item.id"
-      :id="item.id"
-      :imageUrl="item.imageUrl"
-      :name="item.name"
-      :weight="item.weight"
-      :description="item.description"
-      :price="item.price"
-      :is-added="item.isAdded"
-      :is-favorite="item.isFavorite"
-      :on-click-favorite="() => emit('addToFavorite', item)"
-      :on-click-add="() => emit('onClickAddDrawer', item)"
+      v-for="product in filteredProducts"
+      :key="product.id"
+      :id="product.id"
+      :imageUrl="product.imageUrl"
+      :name="product.name"
+      :weight="product.weight"
+      :description="product.description"
+      :price="product.price"
+      :category="product.category"
     />
   </div>
 </template>

@@ -1,4 +1,5 @@
 <script setup>
+import { onMounted } from 'vue'
 
 const emit = defineEmits(['onClickRemove'])
 
@@ -11,6 +12,10 @@ defineProps({
   price: Number,
   isFavorite: Boolean,
   onClickRemove: Function
+})
+
+onMounted(() => {
+  
 })
 </script>
 <template>

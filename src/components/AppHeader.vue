@@ -7,7 +7,7 @@ defineProps({
 </script>
 <template>
   <header class="text-white mb-24">
-    <div class="pl-60 py-5 w-3/4 flex items-center justify-between mx-auto relative">
+    <div class="flex-wrap pl-60 py-5 w-3/4 flex items-center justify-between mx-auto relative">
       <a href="#" class="absolute top-0 left-0">
         <img src="/public/favicon-logo.svg" alt="logo" />
       </a>
