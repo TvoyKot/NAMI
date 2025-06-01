@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { useRootStore } from '../store/rootStore'
 import AppCard from './AppCard.vue'
+
 const rootStore = useRootStore()
 const props = defineProps({
   selectedCategory: {
@@ -9,9 +10,10 @@ const props = defineProps({
     required: true
   }
 })
-
 const filteredProducts = computed(() => {
-  return rootStore.allProducts.filter((product) => product.category === props.selectedCategory)
+  return rootStore.allConvertedProductsNewId.filter(
+    (product) => product.category === props.selectedCategory
+  )
 })
 </script>
 <template>

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
-import { reactive, ref } from 'vue'
+import { reactive, ref, computed } from 'vue'
 import axios from 'axios'
-
+import { v4 as uuidv4 } from 'uuid'
 
 export const useRootStore = defineStore('root', () => {
   const allProducts = ref([
@@ -25,7 +25,7 @@ export const useRootStore = defineStore('root', () => {
       price: 240,
       isAdded: false,
       isFavorite: false,
-      category: 'Sushi and gulkan',
+      category: 'Sushi and gulkan'
     },
     {
       id: 3,
@@ -158,9 +158,16 @@ export const useRootStore = defineStore('root', () => {
       isAdded: false,
       isFavorite: false,
       category: 'Rolls'
-    },
+    }
   ])
 
+  const allConvertedProductsNewId = computed(() => {
+    return allProducts.value.map((product) => {
+      product.id = uuidv4()
+      return product
+    })
+  })
+  
   const rolls = ref([])
   const filters = reactive({
     sortBy: 'name',
@@ -192,13 +199,13 @@ export const useRootStore = defineStore('root', () => {
     filters.sortBy = event.target.value
   }
 
-
   return {
     fetchItems,
     onChangeInput,
     onChangeSelect,
     rolls,
     allProducts,
-    filters,
+    allConvertedProductsNewId,
+    filters
   }
 })

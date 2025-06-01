@@ -4,7 +4,7 @@ import { ref } from 'vue'
 const counter = ref(1)
 
 const props = defineProps({
-  id: Number,
+  id: String,
   imageUrl: String,
   name: String,
   weight: Number,
@@ -15,8 +15,6 @@ const props = defineProps({
   onClickFavorite: Function,
   onClickAdd: Function
 })
-
-
 
 const increaseCount = () => {
   if (counter.value === 99) {
@@ -37,7 +35,7 @@ const decreaseCount = () => {
 
 <template>
   <div
-    class="p-7 shadow-[0_0_15px_5px_rgba(0,0,0,0.2)] rounded-lg bg-white relative hover:shadow-[0_0_15px_5px_rgba(0,0,0,0.5)] hover:-translate-y-1 transition"
+    class="flex flex-col justify-between p-7 shadow-[0_0_15px_5px_rgba(0,0,0,0.2)] rounded-lg bg-white relative hover:shadow-[0_0_15px_5px_rgba(0,0,0,0.5)] hover:-translate-y-1 transition"
   >
     <div class="flex justify-center mb-6">
       <img :src="imageUrl" alt="roll" />
@@ -48,7 +46,7 @@ const decreaseCount = () => {
         alt="heart"
       />
     </div>
-    <div class="flex justify-between mb-7">
+    <div class="flex justify-between items-center mb-7">
       <h2 class="text-xl">{{ name }}</h2>
       <span class="text-xs text-slate-400">{{ weight }} г</span>
     </div>
@@ -57,27 +55,26 @@ const decreaseCount = () => {
     </p>
     <div class="flex justify-between items-center">
       <span class="text-xl">{{ price }} ₽</span>
-      <div>
-        <button
-          v-if="!isAdded"
-          @click="onClickAdd()"
-          class="py-2 px-8 text-white text-base rounded-lg bg-blue-950 hover:bg-blue-800 active:bg-blue-900 cursor-pointer"
+
+      <button
+        v-if="!isAdded"
+        @click="onClickAdd()"
+        class="py-2 px-8 text-white text-base rounded-lg bg-blue-950 hover:bg-blue-800 active:bg-blue-900 cursor-pointer"
+      >
+        В корзину
+      </button>
+      <div v-else>
+        <span
+          @click="decreaseCount()"
+          class="text-white text-xl py-2 mr-3 rounded-full px-2 bg-blue-950 cursor-pointer"
+          >-</span
         >
-          В корзину
-        </button>
-        <div v-else>
-          <span
-            @click="decreaseCount()"
-            class="text-white text-xl py-2 mr-3 rounded-full px-2 bg-blue-950 cursor-pointer"
-            >-</span
-          >
-          <span>{{ counter }}</span>
-          <span
-            @click="increaseCount()"
-            class="text-white text-xl py-2 ml-3 rounded-full px-2 bg-blue-950 cursor-pointer"
-            >+</span
-          >
-        </div>
+        <span>{{ counter }}</span>
+        <span
+          @click="increaseCount()"
+          class="text-white text-xl py-2 ml-3 rounded-full px-2 bg-blue-950 cursor-pointer"
+          >+</span
+        >
       </div>
     </div>
   </div>
