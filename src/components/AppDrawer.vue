@@ -2,10 +2,14 @@
 import AppDrawerButtons from './AppDrawerButtons.vue'
 import AppDrawerList from './AppDrawerList.vue'
 import AppInfoBlock from './AppInfoBlock.vue'
+import { computed } from 'vue'
+import { useCartStore } from '../store/useCartStore'
+const cartStore = useCartStore()
 
-defineProps({
-  totalPrice: Number
-})
+const totalAmount = computed(() => {
+  return cartStore.totalAmount
+})  
+
 </script>
 
 <template>
@@ -20,14 +24,14 @@ defineProps({
     </h1>
     <div class="flex flex-col justify-between h-screen">
       <div>
-        <div v-if="totalPrice">
+        <div v-if="totalAmount">
           <ul>
             <li>
               <AppDrawerList />
             </li>
           </ul>
           <div>
-            <p class="text-xl mb-10">Общая сумма {{ totalPrice }} ₽</p>
+            <p class="text-xl mb-10">Общая сумма {{ totalAmount }} ₽</p>
             <p class="mb-10 w-96">
               * Сумма заказа для доставки курьером должна составлять не менее 500 ₽
             </p>

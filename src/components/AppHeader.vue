@@ -1,9 +1,16 @@
 <script setup>
-const emit = defineEmits(['openDrawer'])
+import { computed } from 'vue'
+import { useCartStore } from '@/store/useCartStore';
+const cartStore = useCartStore()
 
-defineProps({
-  totalItems: Number
+const openDrawer = () => {
+  cartStore.toggleDrawer()
+}
+
+const isProductDrawer = computed(() => {
+  return cartStore.totalCarts
 })
+
 </script>
 <template>
   <header class="text-white mb-24">
@@ -36,12 +43,12 @@ defineProps({
       </div>
       <a
         class="py-2 px-2 bg-white rounded-full mr-6 cursor-pointer relative"
-        @click="() => emit('openDrawer')"
+        @click="openDrawer"
       >
         <span
-        v-if="totalItems > 0"
+        v-if="isProductDrawer"
           class="absolute bottom-5 text-sm right-5 rounded-full py-1 px-3 text-blue-950 bg-slate-200"
-          >{{ totalItems }}</span
+          >{{ isProductDrawer }}</span
         >
         <img class="w-6" src="/public/cart-icon.svg" alt="cart" />
       </a>

@@ -1,7 +1,10 @@
 <script setup>
-import { ref } from 'vue'
-
-const counter = ref(1)
+import { ref, computed } from 'vue'
+import { useCartStore } from '../store/useCartStore'
+import { useQuantity } from '../hooks/quantity'
+import AppQuantityBlock from './AppQuantityBlock.vue'
+const cartStore = useCartStore()
+const [quantity, incrementQuantity, decrementQuantity] = useQuantity()
 
 const props = defineProps({
   id: String,
@@ -9,28 +12,34 @@ const props = defineProps({
   name: String,
   weight: Number,
   description: String,
-  price: Number,
-  isAdded: Boolean,
-  isFavorite: Boolean,
-  onClickFavorite: Function,
-  onClickAdd: Function
+  price: Number
 })
 
-const increaseCount = () => {
-  if (counter.value === 99) {
-    return
-  } else {
-    counter.value += 1
+const product = computed(() => {
+  return {
+    id: props.id,
+    imageUrl: props.imageUrl,
+    name: props.name,
+    weight: props.weight,
+    description: props.description,
+    price: props.price,
+    quantity
   }
+})
+
+const isFavoriteItem = ref(false)
+
+const onClickFavorite = () => {
+  isFavoriteItem.value = !isFavoriteItem.value
 }
 
-const decreaseCount = () => {
-  if (counter.value > 1) {
-    counter.value -= 1
-  } else {
-    props.onClickAdd()
-  }
+const addToCart = () => {
+  cartStore.setProductToCart(product.value)
 }
+
+const isProductInCart = computed(() => {
+  return cartStore.productInCart(props.id) !== undefined
+})
 </script>
 
 <template>
@@ -42,7 +51,7 @@ const decreaseCount = () => {
       <img
         class="absolute top-8 right-8 cursor-pointer"
         @click="onClickFavorite"
-        :src="!isFavorite ? '/public/heart-icon.svg' : '/public/heart-full-icon.svg'"
+        :src="!isFavoriteItem ? '/public/heart-icon.svg' : '/public/heart-full-icon.svg'"
         alt="heart"
       />
     </div>
@@ -57,24 +66,18 @@ const decreaseCount = () => {
       <span class="text-xl">{{ price }} ₽</span>
 
       <button
-        v-if="!isAdded"
-        @click="onClickAdd()"
+        v-if="!isProductInCart"
+        @click="addToCart"
         class="py-2 px-8 text-white text-base rounded-lg bg-blue-950 hover:bg-blue-800 active:bg-blue-900 cursor-pointer"
       >
         В корзину
       </button>
       <div v-else>
-        <span
-          @click="decreaseCount()"
-          class="text-white text-xl py-2 mr-3 rounded-full px-2 bg-blue-950 cursor-pointer"
-          >-</span
-        >
-        <span>{{ counter }}</span>
-        <span
-          @click="increaseCount()"
-          class="text-white text-xl py-2 ml-3 rounded-full px-2 bg-blue-950 cursor-pointer"
-          >+</span
-        >
+        <AppQuantityBlock
+          :quantity="quantity"
+          @decrement="decrementQuantity"
+          @increment="incrementQuantity"
+        />
       </div>
     </div>
   </div>

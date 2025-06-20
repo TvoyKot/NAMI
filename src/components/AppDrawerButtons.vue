@@ -1,11 +1,10 @@
 <script setup>
-// import { inject, computed } from 'vue'
+import { useCartStore } from '@/store/useCartStore';
+const cartStore = useCartStore()
 
-
-// const { closeDrawer, createOrder, isCreatingOrder, isDrawerEmpty } = inject('drawerActions')
-
-// const disabledButton = computed(() => isCreatingOrder.value || isDrawerEmpty.value ? true : false)
-
+const closeDrawer = () => {
+  cartStore.toggleDrawer()
+}
 </script>
 <template>
   <div>
@@ -16,8 +15,6 @@
       Вернуться к покупкам
     </button>
     <button
-      @click="createOrder()"
-      :disabled="disabledButton"
       :is-creating-order="isCreatingOrder"
       class="shadow-xl py-5 px-7 text-black bg-white cursor-pointer disabled:hover:text-black hover:bg-black active:bg-gray-700 disabled:bg-gray-400 hover:text-white transition rounded-lg text-xl border-2"
     >

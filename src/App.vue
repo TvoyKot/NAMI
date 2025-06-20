@@ -1,16 +1,26 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { TABS_API } from './constants'
 import axios from 'axios'
+import { useCartStore } from './store/useCartStore'
 import AppHeader from './components/AppHeader.vue'
 import AppTabs from './components/AppTabs.vue'
 import AppCardList from './components/AppCardList.vue'
+import AppDrawer from './components/AppDrawer.vue'
+
+const cartStore = useCartStore()
+const categories = ref([])
+let selectedCategory = ref('Rolls')
+
+const disabledWindow = computed(() => {
+  return cartStore.isDrawerOpen
+    ? document.body.classList.add('overflow-hidden')
+    : document.body.classList.remove('overflow-hidden')
+})
 
 const selectCategory = (category) => {
   selectedCategory.value = category
 }
-const categories = ref([])
-let selectedCategory = ref('Rolls')
 const getCategories = async () => {
   try {
     const response = await axios.get(`${TABS_API}`)
@@ -31,7 +41,7 @@ onMounted(() => {
       <AppHeader />
     </div>
   </header>
-  <main>
+  <main :class="disabledWindow">
     <section class="w-3/5 mx-auto mb-14">
       <AppTabs
         @select-category="selectCategory"
@@ -53,13 +63,13 @@ onMounted(() => {
           />
         </div>
       </div> -->
-      <AppCardList :selectedCategory="selectedCategory" />
+      <AppCardList @on-click-favorite="addToFavorite" :selectedCategory="selectedCategory" />
     </section>
   </main>
   <div>
     <footer class="bg-blue-950"></footer>
   </div>
-  <!-- <AppDrawer /> -->
+  <AppDrawer v-if="cartStore.isDrawerOpen" />
 </template>
 
 <style></style>

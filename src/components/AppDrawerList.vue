@@ -1,14 +1,18 @@
 <script setup>
-import { inject } from 'vue'
-
+import { computed } from 'vue'
+import { useCartStore } from '../store/useCartStore'
 import AppDrawerItem from './AppDrawerItem.vue'
 
-const { drawerItems, removeFromDrawer } = inject('drawerActions')
+const cartStore = useCartStore()    
+
+const productsInCart = computed(() => {
+  return cartStore.cart
+})
 
 </script>
 <template>
   <AppDrawerItem
-    v-for="item in drawerItems"
+    v-for="item in productsInCart"
     :key="item.id"
     :id="item.id"
     :imageUrl="item.imageUrl"
@@ -16,7 +20,6 @@ const { drawerItems, removeFromDrawer } = inject('drawerActions')
     :weight="item.weight"
     :description="item.description"
     :price="item.price"
-    :isFavorite="item.isFavorite"
-    @on-click-remove="() => removeFromDrawer(item)"
+    :quantity="item.quantity"
   />
 </template>
