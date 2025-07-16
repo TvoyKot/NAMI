@@ -4,6 +4,7 @@ import { ref, computed } from 'vue'
 export const useCartStore = defineStore('cart', () => {
   const cart = ref([])
   const isDrawerOpen = ref(false)
+  const isSuccessPageOpen = ref(false)
 
   const toggleDrawer = () => {
     isDrawerOpen.value = !isDrawerOpen.value
@@ -49,6 +50,7 @@ export const useCartStore = defineStore('cart', () => {
     toggleDrawer,
     decrementQuantity,
     incrementQuantity,
-    setProductToCart
+    setProductToCart,
+    isSuccessPageOpen,
   }
 })

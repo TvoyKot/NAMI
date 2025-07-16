@@ -14,7 +14,7 @@ const props = defineProps({
 })
 
 const isPriceProduct = computed(() => {
-  return props.price
+  return props.price 
 })
 const incrementQuantity = (id) => {
   cartStore.incrementQuantity(id)
@@ -34,12 +34,12 @@ const removeProduct = (id) => {
 </script>
 <template>
   <div
-    class="flex justify-between gap-6 p-4 mb-3 shadow-[0_0_15px_5px_rgba(0,0,0,0.2)] rounded-lg bg-white overflow-hidden relative"
+    class="flex justify-between gap-2 p-4 mb-1 shadow-[0_0_15px_5px_rgba(0,0,0,0.2)] rounded-lg bg-white overflow-hidden relative"
   >
-    <div>
+    <div class="flex flex-col">
       <img :src="imageUrl" alt="roll" />
+      <img src="/public/heart-icon.svg" class="absolute top-1 left-2 cursor-pointer" alt="heart" />
     </div>
-    <img src="/public/heart-icon.svg" class="absolute top-1 left-2 cursor-pointer" alt="heart" />
     <div class="w-56 flex flex-col justify-start relative">
       <h2 class="text-xl">{{ name }}</h2>
       <p class="text-slate-400 text-lg">

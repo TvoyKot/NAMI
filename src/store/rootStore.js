@@ -158,6 +158,28 @@ export const useRootStore = defineStore('root', () => {
       isAdded: false,
       isFavorite: false,
       category: 'Rolls'
+    },
+    {
+      id: 15,
+      imageUrl: '/public/rolls/roll-8.png',
+      name: 'Ролл Банзай',
+      weight: 185,
+      description: 'Помидор, болгарский перец, листья салата, кунжут',
+      price: 200,
+      isAdded: false,
+      isFavorite: false,
+      category: 'Rolls'
+    },
+    {
+      id: 16,
+      imageUrl: '/public/rolls/roll-10.png',
+      name: 'Ролл Самурай',
+      weight: 185,
+      description: 'Болгарский перец, листья салата, кунжут',
+      price: 200,
+      isAdded: false,
+      isFavorite: false,
+      category: 'Rolls'
     }
   ])
 
@@ -167,7 +189,7 @@ export const useRootStore = defineStore('root', () => {
       return product
     })
   })
-  
+
   const rolls = ref([])
   const filters = reactive({
     sortBy: 'name',

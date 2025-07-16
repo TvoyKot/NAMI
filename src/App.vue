@@ -3,21 +3,24 @@ import { ref, computed, onMounted } from 'vue'
 import { TABS_API } from './constants'
 import axios from 'axios'
 import { useCartStore } from './store/useCartStore'
+import { useLikesStore } from './store/useLikeStore'
 import AppHeader from './components/AppHeader.vue'
 import AppTabs from './components/AppTabs.vue'
 import AppCardList from './components/AppCardList.vue'
 import AppDrawer from './components/AppDrawer.vue'
+import AppLikes from './components/AppLikes.vue'
+import AppSuccessComponent from './components/AppSuccessComponent.vue'
 
 const cartStore = useCartStore()
+const likesStore = useLikesStore()
 const categories = ref([])
 let selectedCategory = ref('Rolls')
 
 const disabledWindow = computed(() => {
-  return cartStore.isDrawerOpen
+  return cartStore.isDrawerOpen || likesStore.isLikesOpen
     ? document.body.classList.add('overflow-hidden')
     : document.body.classList.remove('overflow-hidden')
 })
-
 const selectCategory = (category) => {
   selectedCategory.value = category
 }
@@ -36,13 +39,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <header class="shadow-xl bg-blue-950">
-    <div class="w-4/5 mx-auto z-5">
+  <header class="header shadow-xl bg-blue-950">
+    <div class="w-[1100px] mx-auto z-5">
       <AppHeader />
     </div>
   </header>
-  <main :class="disabledWindow">
-    <section class="w-3/5 mx-auto mb-14">
+  <AppSuccessComponent v-if="cartStore.isSuccessPageOpen" />
+  <main v-else :class="disabledWindow">
+    <section class="w-[1100px] mx-auto mb-14">
       <AppTabs
         @select-category="selectCategory"
         :categories="categories"
@@ -70,6 +74,9 @@ onMounted(() => {
     <footer class="bg-blue-950"></footer>
   </div>
   <AppDrawer v-if="cartStore.isDrawerOpen" />
+  <AppLikes v-if="likesStore.isLikesOpen" />
 </template>
 
-<style></style>
+<style>
+
+</style>

@@ -1,9 +1,11 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import { useCartStore } from '../store/useCartStore'
+import { useLikesStore } from '../store/useLikeStore'
 import { useQuantity } from '../hooks/quantity'
 import AppQuantityBlock from './AppQuantityBlock.vue'
 const cartStore = useCartStore()
+const likesStore = useLikesStore()
 const [quantity, incrementQuantity, decrementQuantity] = useQuantity()
 
 const props = defineProps({
@@ -27,10 +29,8 @@ const product = computed(() => {
   }
 })
 
-const isFavoriteItem = ref(false)
-
-const onClickFavorite = () => {
-  isFavoriteItem.value = !isFavoriteItem.value
+const like = () => {
+  likesStore.handleLikes(product.value)
 }
 
 const addToCart = () => {
@@ -39,6 +39,10 @@ const addToCart = () => {
 
 const isProductInCart = computed(() => {
   return cartStore.productInCart(props.id) !== undefined
+})
+
+const isLikedProduct = computed(() => {
+  return likesStore.likedProduct(product.value)
 })
 </script>
 
@@ -50,8 +54,8 @@ const isProductInCart = computed(() => {
       <img :src="imageUrl" alt="roll" />
       <img
         class="absolute top-8 right-8 cursor-pointer"
-        @click="onClickFavorite"
-        :src="!isFavoriteItem ? '/public/heart-icon.svg' : '/public/heart-full-icon.svg'"
+        @click="like"
+        :src="!isLikedProduct  ? '/public/heart-icon.svg' : '/public/heart-full-icon.svg'"
         alt="heart"
       />
     </div>

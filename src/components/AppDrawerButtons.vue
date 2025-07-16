@@ -1,10 +1,17 @@
 <script setup>
-import { useCartStore } from '@/store/useCartStore';
+import { computed } from 'vue'
+import { useCartStore } from '@/store/useCartStore'
 const cartStore = useCartStore()
+
+const emit = defineEmits(['proceedToPayment'])
 
 const closeDrawer = () => {
   cartStore.toggleDrawer()
 }
+
+const disabledButton = computed(() => {
+  return cartStore.totalCarts < 2 ? true : false
+})
 </script>
 <template>
   <div>
@@ -15,8 +22,9 @@ const closeDrawer = () => {
       Вернуться к покупкам
     </button>
     <button
-      :is-creating-order="isCreatingOrder"
-      class="shadow-xl py-5 px-7 text-black bg-white cursor-pointer disabled:hover:text-black hover:bg-black active:bg-gray-700 disabled:bg-gray-400 hover:text-white transition rounded-lg text-xl border-2"
+      :disabled="disabledButton"
+      @click="emit('proceedToPayment')"
+      class="ml-7 shadow-xl py-5 px-7 text-black bg-white cursor-pointer disabled:hover:text-black hover:bg-black active:bg-gray-700 disabled:bg-gray-400 hover:text-white transition rounded-lg text-xl border-2"
     >
       Оформить заказ
     </button>
