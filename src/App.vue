@@ -1,82 +1,36 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { TABS_API } from './constants'
-import axios from 'axios'
-import { useCartStore } from './store/useCartStore'
-import { useLikesStore } from './store/useLikeStore'
+import { computed, watch } from 'vue'
 import AppHeader from './components/AppHeader.vue'
-import AppTabs from './components/AppTabs.vue'
-import AppCardList from './components/AppCardList.vue'
+import AppMain from './components/AppMain.vue'
 import AppDrawer from './components/AppDrawer.vue'
 import AppLikes from './components/AppLikes.vue'
-import AppSuccessComponent from './components/AppSuccessComponent.vue'
-
+import { useCartStore } from './store/useCartStore'
+import { useLikeStore } from './store/useLikeStore'
 const cartStore = useCartStore()
-const likesStore = useLikesStore()
-const categories = ref([])
-let selectedCategory = ref('Rolls')
+const likeStore = useLikeStore()
 
 const disabledWindow = computed(() => {
-  return cartStore.isDrawerOpen || likesStore.isLikesOpen
-    ? document.body.classList.add('overflow-hidden')
-    : document.body.classList.remove('overflow-hidden')
+  return cartStore.isDrawerOpen || likeStore.isLikesOpen
 })
-const selectCategory = (category) => {
-  selectedCategory.value = category
-}
-const getCategories = async () => {
-  try {
-    const response = await axios.get(`${TABS_API}`)
-    const dataTabs = response.data
-    categories.value = dataTabs
-  } catch (err) {
-    console.log(err)
+
+watch(disabledWindow, (newVal) => {
+  if (newVal) {
+    document.body.classList.add('overflow-hidden')
+  } else {
+    document.body.classList.remove('overflow-hidden')
   }
-}
-onMounted(() => {
-  getCategories()
 })
 </script>
 
 <template>
-  <header class="header shadow-xl bg-blue-950">
-    <div class="w-[1100px] mx-auto z-5">
-      <AppHeader />
-    </div>
-  </header>
-  <AppSuccessComponent v-if="cartStore.isSuccessPageOpen" />
-  <main v-else :class="disabledWindow">
-    <section class="w-[1100px] mx-auto mb-14">
-      <AppTabs
-        @select-category="selectCategory"
-        :categories="categories"
-        :selected-category="selectedCategory"
-      />
-      <!-- <div class="flex justify-center gap-6 mb-14">
-        <select class="w-1/4 border rounded-md p-2 cursor-pointer text-xl">
-          <option value="name">По названию</option>
-          <option value="price">По цене (Дешёвые)</option>
-          <option value="-price">По цене (Дорогие)</option>
-        </select>
-        <div class="w-1/4 relative">
-          <img class="absolute top-3 left-3" src="/public/search.svg" alt="search-icon" />
-          <input
-            class="w-full text-xl border pl-8 py-2 outline-none rounded-md cursor-pointer"
-            type="text"
-            placeholder="Поиск по названию..."
-          />
-        </div>
-      </div> -->
-      <AppCardList @on-click-favorite="addToFavorite" :selectedCategory="selectedCategory" />
-    </section>
-  </main>
-  <div>
-    <footer class="bg-blue-950"></footer>
-  </div>
+  <AppHeader />
+  <AppMain :class="{ 'overflow-hidden': disabledWindow }" />
   <AppDrawer v-if="cartStore.isDrawerOpen" />
-  <AppLikes v-if="likesStore.isLikesOpen" />
+  <AppLikes v-else-if="likeStore.isLikesOpen" />
 </template>
 
 <style>
-
+* {
+  box-sizing: border-box;
+}
 </style>

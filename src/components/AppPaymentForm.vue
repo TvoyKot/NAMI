@@ -36,7 +36,7 @@ const formattedPrice = computed(() => {
 const validateName = () => {
   const pattern = /[^A-Za-zA-Яа-яЁё]/g
   let filteredName = form.name.replace(pattern, '')
-  if (filteredName.length > 0 ) {
+  if (filteredName.length > 0) {
     filteredName = filteredName.charAt(0).toUpperCase() + filteredName.slice(1)
   }
   if (filteredName !== form.name) {
@@ -90,13 +90,13 @@ const disabledButton = computed(() => {
 })
 </script>
 <template>
-  <div>
-    <form @submit.prevent="submitPayment" class="flex flex-col gap-4 w-full">
-      <div class="w-[540px] rounded-[8px] px-16 pt-4 pb-7 bg-white relative">
+  <div class="w-full">
+    <form @submit.prevent="submitPayment" class="flex flex-col lg:flex-col gap-4">
+      <div class="rounded-[8px] px-16 pt-4 pb-7 bg-white relative">
         <p class="font-light text-[22px] mb-4">
           <span class="number-form rounded-full text-[20px]">1</span>Способ доставки
         </p>
-        <div class="flex items-center">
+        <div class="flex lg:items-center">
           <div class="mr-[20px] radio">
             <input
               type="radio"
@@ -107,7 +107,7 @@ const disabledButton = computed(() => {
             />
           </div>
           <svg
-            class="mr-[40px] delivery-icon"
+            class="mr-[10px] delivery-icon"
             width="30"
             height="30"
             stroke="#222222"
@@ -156,7 +156,7 @@ const disabledButton = computed(() => {
             </defs>
           </svg>
 
-          <label class="mr-[104px] text-[18px] font-light line-height-[100%]" for="delivery"
+          <label class="mr-[42px] text-[18px] font-light line-height-[100%]" for="delivery"
             >Курьер</label
           >
           <span class="text-[12px] text-[#FF0000]">Временно недоступно</span>
@@ -178,7 +178,7 @@ const disabledButton = computed(() => {
             fill="none"
             viewBox="0 0 24 24"
             stroke="#222222"
-            class="w-[30px] h-[30px] mr-[40px]"
+            class="w-[30px] h-[30px] mr-[10px]"
           >
             <path
               strokeLinecap="round"
@@ -186,7 +186,7 @@ const disabledButton = computed(() => {
               d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
             />
           </svg>
-          <label class="text-[18px] font-light line-height-[100%] mr-[78px]" for="pickup"
+          <label class="text-[18px] font-light line-height-[100%] mr-[18px]" for="pickup"
             >Самовывоз</label
           >
           <div class="flex flex-col">
@@ -195,7 +195,7 @@ const disabledButton = computed(() => {
           </div>
         </div>
       </div>
-      <div class="w-[540px] rounded-[8px] px-16 pt-4 pb-7 bg-white relative">
+      <div class="w-full rounded-[8px] px-16 pt-4 pb-7 bg-white relative">
         <p class="font-light text-[22px] mb-4">
           <span class="number-form rounded-full text-[20px]">2</span>Данные для доставки
         </p>
@@ -240,9 +240,9 @@ const disabledButton = computed(() => {
         </div>
       </div>
       <div
-        class="flex flex-col items-center w-[540px] rounded-[8px] px-[16px] py-[32px] bg-white relative"
+        class="flex flex-col items-center w-full rounded-[8px] px-[16px] py-[32px] mb-2 bg-white relative"
       >
-        <div class="w-[430px] mb-10">
+        <div class="w-full mb-10">
           <p class="border-b border-[#D9D9D9] pb-5 mb-5 text-[18px] font-light">
             Стоимость товаров <span class="ml-[45px]"> {{ formattedOriginalPrice[0] }} .</span
             ><span>{{ formattedOriginalPrice[1] }}</span>

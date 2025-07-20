@@ -1,11 +1,11 @@
 <script setup>
 import { computed } from 'vue'
 import { useCartStore } from '../store/useCartStore'
-import { useLikesStore } from '../store/useLikeStore'
+import { useLikeStore } from '../store/useLikeStore'
 import { useQuantity } from '../hooks/quantity'
 import AppQuantityBlock from './AppQuantityBlock.vue'
 const cartStore = useCartStore()
-const likesStore = useLikesStore()
+const likesStore = useLikeStore()
 const [quantity, incrementQuantity, decrementQuantity] = useQuantity()
 
 const props = defineProps({
@@ -48,7 +48,7 @@ const isLikedProduct = computed(() => {
 
 <template>
   <div
-    class="flex flex-col justify-between p-7 shadow-[0_0_15px_5px_rgba(0,0,0,0.2)] rounded-lg bg-white relative hover:shadow-[0_0_15px_5px_rgba(0,0,0,0.5)] hover:-translate-y-1 transition"
+    class="card flex flex-col justify-between p-7 shadow-[0_0_15px_5px_rgba(0,0,0,0.2)] rounded-lg bg-white relative hover:shadow-[0_0_15px_5px_rgba(0,0,0,0.5)] hover:-translate-y-1 transition"
   >
     <div class="flex justify-center mb-6">
       <img :src="imageUrl" alt="roll" />
@@ -86,3 +86,8 @@ const isLikedProduct = computed(() => {
     </div>
   </div>
 </template>
+<style scoped>
+.card {
+  width: 270px
+}
+</style>

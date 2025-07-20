@@ -17,7 +17,9 @@ const filteredProducts = computed(() => {
 })
 </script>
 <template>
-  <div class="grid grid-cols-4 gap-x-4 gap-y-4">
+  <div
+    class="card flex gap-5 sm:gap-7 flex-wrap justify-center"
+  >
     <AppCard
       v-for="product in filteredProducts"
       :key="product.id"
@@ -31,3 +33,5 @@ const filteredProducts = computed(() => {
     />
   </div>
 </template>
+<style>
+</style>

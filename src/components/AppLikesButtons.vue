@@ -1,9 +1,9 @@
 <script setup>
-import { useLikesStore } from '@/store/useLikeStore'
-const likesStore = useLikesStore()
+import { useLikeStore } from '@/store/useLikeStore'
+const likeStore = useLikeStore()
 
 const closeLikes = () => {
-  likesStore.toggleLikes()
+  likeStore.toggleLikes()
 }
 </script>
 <template>

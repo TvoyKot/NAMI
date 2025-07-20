@@ -34,10 +34,10 @@ const removeProduct = (id) => {
 </script>
 <template>
   <div
-    class="flex justify-between gap-2 p-4 mb-1 shadow-[0_0_15px_5px_rgba(0,0,0,0.2)] rounded-lg bg-white overflow-hidden relative"
+    class="flex flex-col lg:flex-row lg:justify-between gap-2 p-4 mb-1 shadow-[0_0_15px_5px_rgba(0,0,0,0.2)] rounded-lg bg-white overflow-hidden relative"
   >
     <div class="flex flex-col">
-      <img :src="imageUrl" alt="roll" />
+      <img class="w-36" :src="imageUrl" alt="roll" />
       <img src="/public/heart-icon.svg" class="absolute top-1 left-2 cursor-pointer" alt="heart" />
     </div>
     <div class="w-56 flex flex-col justify-start relative">
@@ -47,7 +47,7 @@ const removeProduct = (id) => {
       </p>
       <span class="text-xs text-slate-400">({{ weight }} г)</span>
     </div>
-    <div class="flex flex-col justify-between mr-16">
+    <div class="flex flex-col justify-between lg:mr-16">
       <span class="text-xl">Цена {{ price }} ₽</span>
       <div id="counter" class="flex justify-between">
         <AppQuantityBlock

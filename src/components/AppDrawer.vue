@@ -20,15 +20,17 @@ const proceedToPayment = () => {
 }
 
 let showRegistrationOrder = ref(true)
+
 </script>
 
 <template>
   <div
     class="fixed top-0 left-0 w-full h-full overflow-hidden z-10 bg-black/50 backdrop-blur-md"
   ></div>
-  <div class="p-8 bg-amber-100 w-[613px] h-full overflow-y-scroll fixed top-0 right-0 opacity-100 z-20">
+  <div class="p-2 lg:p-8 bg-amber-100 w-[320px] lg:w-[500px] h-full overflow-y-scroll fixed top-0 right-0 opacity-100 z-20">
     <h1
-      class="w-60 text-uppercase text-blue-950 mx-auto text-center mb-12 text-6xl before:absolute before:-top-4 before:left-0 before:content-['.'] after:absolute before:text-blue-950 after:content-['.'] after:-top-4 after:right-0 after:text-blue-950 relative"
+      class="w-60 text-uppercase text-blue-950 mx-auto text-center mb-12 text-3xl lg:text-6xl lg:before:absolute lg:before:-top-4 lg:before:left-0 lg:before:content-['.'] lg:after:absolute lg:before:text-blue-950 lg:after:content-['.'] lg:after:-top-4 lg:after:right-0 lg:after:text-blue-950
+      before:absolute before:-top-2 before:left-14 before:content-['.'] after:absolute before:text-blue-950 after:content-['.'] after:-top-2 after:right-14 after:text-blue-950 relative"
     >
       {{ switchingForm }}
     </h1>
@@ -40,8 +42,8 @@ let showRegistrationOrder = ref(true)
           </li>
         </ul>
         <div class="mt-auto">
-          <p class="text-xl mb-10">Общая сумма {{ totalAmount }} ₽</p>
-          <p class="mb-10 w-96">
+          <p class="text-xl mb-4 lg:mb-10">Общая сумма {{ totalAmount }} ₽</p>
+          <p class="inline-block mb-4 lg:mb-10  lg:w-96">
             * Сумма заказа для доставки курьером должна составлять не менее 500 ₽
           </p>
         </div>
@@ -55,8 +57,8 @@ let showRegistrationOrder = ref(true)
           image-url="./public/package-icon.png"
         />
       </div>
+      <AppDrawerButtons @proceed-to-payment="proceedToPayment" />
     </div>
-    <AppDrawerButtons @proceed-to-payment="proceedToPayment" />
   </div>
 </template>
 <style></style>

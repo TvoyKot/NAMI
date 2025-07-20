@@ -1,7 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
-export const useLikesStore = defineStore('like', () => {
+export const useLikeStore = defineStore('like', () => {
   const likes = ref([])
   const isLikesOpen = ref(false)
 

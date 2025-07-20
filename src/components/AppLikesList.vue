@@ -1,11 +1,11 @@
 <script setup>
 import AppLikeCard from './AppLikeCard.vue'
 import { computed } from 'vue'
-import { useLikesStore } from '../store/useLikeStore'
-const likesStore = useLikesStore()
+import { useLikeStore } from '../store/useLikeStore'
+const likeStore = useLikeStore()
 
 const productsInLikes = computed(() => {
-    return likesStore.likes
+    return likeStore.likes
 })
 </script>
 <template>
