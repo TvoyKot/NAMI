@@ -3,7 +3,17 @@ import { computed } from 'vue'
 import { useCartStore } from '@/store/useCartStore'
 const cartStore = useCartStore()
 
-const emit = defineEmits(['proceedToPayment'])
+defineProps({
+  showRegistrationOrder: {
+    type: Boolean,
+    required: true
+  }
+})
+const emit = defineEmits(['proceedToPayment', 'hide-button-order'])
+
+const handleProceedToPayment = () => {
+  emit('proceedToPayment')
+}
 
 const closeDrawer = () => {
   cartStore.toggleDrawer()
@@ -22,8 +32,9 @@ const disabledButton = computed(() => {
       Вернуться к покупкам
     </button>
     <button
+        v-if="!showRegistrationOrder"
       :disabled="disabledButton"
-      @click="emit('proceedToPayment')"
+      @click="handleProceedToPayment"
       class="lg:ml-5 shadow-xl py-5 px-7 text-black bg-white cursor-pointer disabled:hover:text-black hover:bg-black active:bg-gray-700 disabled:bg-gray-400 hover:text-white transition rounded-lg text-lg border-2"
     >
       Оформить заказ

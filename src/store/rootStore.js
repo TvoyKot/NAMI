@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
-import { reactive, ref, computed } from 'vue'
-import axios from 'axios'
+import { ref, computed } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 
 export const useRootStore = defineStore('root', () => {
@@ -191,43 +190,10 @@ export const useRootStore = defineStore('root', () => {
   })
 
   const rolls = ref([])
-  const filters = reactive({
-    sortBy: 'name',
-    searchQuery: ''
-  })
-  const fetchItems = async () => {
-    try {
-      const params = {
-        sortBy: filters.sortBy
-      }
-
-      if (filters.searchQuery) {
-        params.name = `*${filters.searchQuery}*`
-      }
-
-      const { data } = await axios.get(`https://e32a30db69781a0a.mokky.dev/rolls`, {
-        params
-      })
-
-      rolls.value = data
-    } catch (err) {
-      console.log(err)
-    }
-  }
-  const onChangeInput = (event) => {
-    filters.searchQuery = event.target.value
-  }
-  const onChangeSelect = (event) => {
-    filters.sortBy = event.target.value
-  }
 
   return {
-    fetchItems,
-    onChangeInput,
-    onChangeSelect,
     rolls,
     allProducts,
     allConvertedProductsNewId,
-    filters
   }
 })

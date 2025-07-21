@@ -32,7 +32,7 @@ onMounted(() => {
 <template>
   <main>
     <AppSuccessComponent v-if="cartStore.isSuccessPageOpen" />
-    <section class="mx-auto mb-14">
+    <section v-else class="max-w-[1210px] mx-auto mb-14">
       <AppTabs
         @select-category="selectCategory"
         :categories="categories"

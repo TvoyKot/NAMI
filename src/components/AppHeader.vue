@@ -26,7 +26,7 @@ const toggleMenu = () => {
 <template>
   <header class="shadow-xl bg-blue-950 text-white mb-6 lg:mb-24 pr-5">
     <div
-      class="header lg:pl-60 pl-20 flex items-center justify-end mx-auto relative py-3 lg:py-7"
+      class="max-w-[1210px] header lg:pl-60 pl-20 flex items-center justify-end mx-auto relative py-3 lg:py-7"
     >
       <a href="#" class="flex gap-5 absolute top-50% left-5">
         <img @click="toggleMenu" class="block lg:hidden" src="/public/burger-menu.svg" alt="" />

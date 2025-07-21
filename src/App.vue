@@ -24,7 +24,7 @@ watch(disabledWindow, (newVal) => {
 
 <template>
   <AppHeader />
-  <AppMain :class="{ 'overflow-hidden': disabledWindow }" />
+  <AppMain  :class="{ 'overflow-hidden': disabledWindow }" />
   <AppDrawer v-if="cartStore.isDrawerOpen" />
   <AppLikes v-else-if="likeStore.isLikesOpen" />
 </template>
